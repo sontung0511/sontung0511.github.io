@@ -1,0 +1,1635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CV Admin Panel</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
+  <style>
+    /* ── Reset & Base ────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #0f172a;
+      --card:    #1e293b;
+      --surface: #273549;
+      --border:  #334155;
+      --accent:  #10b981;
+      --accent2: #34d399;
+      --adim:    rgba(16,185,129,0.12);
+      --text:    #94a3b8;
+      --light:   #e2e8f0;
+      --heading: #f8fafc;
+      --danger:  #ef4444;
+      --warn:    #f59e0b;
+      --radius:  10px;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    h1,h2,h3,h4 { color: var(--heading); font-weight: 600; }
+    a { color: var(--accent); }
+
+    /* ── Login Screen ─────────────────────────────────── */
+    #login-screen {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: radial-gradient(ellipse at 50% 0%, rgba(16,185,129,0.12) 0%, transparent 60%), var(--bg);
+    }
+
+    .login-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 48px 40px;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.4);
+    }
+
+    .login-box .logo {
+      width: 56px;
+      height: 56px;
+      background: var(--adim);
+      border: 2px solid var(--accent);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 24px;
+    }
+
+    .login-box h2 { font-size: 22px; margin-bottom: 6px; }
+    .login-box p  { color: var(--text); margin-bottom: 28px; font-size: 13px; }
+
+    .login-box input {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      color: var(--light);
+      font-size: 14px;
+      outline: none;
+      margin-bottom: 14px;
+      transition: border-color 0.2s;
+      font-family: inherit;
+    }
+
+    .login-box input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--adim); }
+    #login-error { color: var(--danger); font-size: 13px; margin-bottom: 12px; min-height: 18px; }
+
+    /* ── Buttons ──────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      border-radius: var(--radius);
+      border: none;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: inherit;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      width: 100%;
+      justify-content: center;
+      padding: 12px;
+      font-size: 14px;
+    }
+
+    .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(16,185,129,0.35); }
+
+    .btn-sm              { padding: 7px 14px; font-size: 12px; }
+    .btn-ghost           { background: transparent; color: var(--text); border: 1px solid var(--border); }
+    .btn-ghost:hover     { background: var(--surface); color: var(--light); }
+    .btn-success         { background: var(--accent); color: #fff; }
+    .btn-success:hover   { background: var(--accent2); box-shadow: 0 4px 14px rgba(16,185,129,0.3); }
+    .btn-danger          { background: transparent; color: var(--danger); border: 1px solid var(--danger); }
+    .btn-danger:hover    { background: rgba(239,68,68,0.1); }
+    .btn-info            { background: var(--surface); color: var(--light); border: 1px solid var(--border); }
+    .btn-info:hover      { background: var(--border); }
+
+    /* ── Admin Layout ─────────────────────────────────── */
+    #admin-screen { display: none; min-height: 100vh; flex-direction: column; }
+
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 0 28px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .top-bar-left { display: flex; align-items: center; gap: 12px; }
+    .top-bar-logo { color: var(--accent); font-size: 20px; font-weight: 700; }
+    .top-bar-badge {
+      background: var(--adim);
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 20px;
+      border: 1px solid rgba(16,185,129,0.2);
+    }
+    .top-bar-right { display: flex; align-items: center; gap: 10px; }
+
+    /* ── Save toast ───────────────────────────────────── */
+    #save-toast {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      background: var(--accent);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      font-size: 13px;
+      display: none;
+      box-shadow: 0 8px 24px rgba(16,185,129,0.4);
+      z-index: 9999;
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+
+    /* ── Tabs ─────────────────────────────────────────── */
+    .admin-body { display: flex; flex: 1; }
+
+    .sidebar-nav {
+      width: 220px;
+      min-width: 220px;
+      background: var(--card);
+      border-right: 1px solid var(--border);
+      padding: 20px 12px;
+      position: sticky;
+      top: 60px;
+      height: calc(100vh - 60px);
+      overflow-y: auto;
+    }
+
+    .nav-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #475569;
+      padding: 0 12px;
+      margin: 16px 0 6px;
+    }
+
+    .nav-label:first-child { margin-top: 0; }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.15s;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+    }
+
+    .nav-item:hover  { background: var(--surface); color: var(--light); }
+    .nav-item.active { background: var(--adim); color: var(--accent); }
+    .nav-item .icon  { font-size: 15px; width: 18px; text-align: center; }
+
+    /* ── Main content ─────────────────────────────────── */
+    .main-content {
+      flex: 1;
+      padding: 32px 36px;
+      max-width: 860px;
+    }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-header h2 { font-size: 18px; }
+    .section-icon {
+      width: 36px; height: 36px;
+      background: var(--adim);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent);
+      font-size: 16px;
+    }
+
+    /* ── Form elements ────────────────────────────────── */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .form-grid.full { grid-template-columns: 1fr; }
+    .form-grid.three { grid-template-columns: 1fr 1fr 1fr; }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field.span2 { grid-column: span 2; }
+
+    label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--light);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    input[type="text"],
+    input[type="url"],
+    input[type="email"],
+    textarea,
+    select {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: var(--light);
+      font-size: 13px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      width: 100%;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--adim);
+    }
+
+    textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
+
+    .field-hint {
+      font-size: 11px;
+      color: #475569;
+      margin-top: 2px;
+    }
+
+    /* ── Cards ────────────────────────────────────────── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px 24px;
+      margin-bottom: 20px;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .card-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--light);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-badge {
+      font-size: 10px;
+      background: var(--adim);
+      color: var(--accent);
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+
+    /* ── Divider ──────────────────────────────────────── */
+    .divider { height: 1px; background: var(--border); margin: 24px 0; }
+
+    /* ── Tag input ────────────────────────────────────── */
+    .tag-preview {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+      padding: 12px;
+      background: var(--surface);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      min-height: 42px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 3px 12px;
+      background: var(--adim);
+      color: var(--accent2);
+      border: 1px solid rgba(16,185,129,0.25);
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    /* ── Status bar at bottom of panel ───────────────── */
+    .status-bar {
+      font-size: 12px;
+      color: #475569;
+      padding: 6px 0 0;
+    }
+
+    .status-ok   { color: var(--accent); }
+    .status-warn { color: var(--warn); }
+
+    /* ── Portfolio project cards ──────────────────────── */
+    .proj-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 14px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .proj-card:hover { border-color: #4b5563; }
+
+    .proj-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .proj-card-header:hover { background: var(--surface); }
+
+    .proj-thumb {
+      width: 56px;
+      height: 42px;
+      border-radius: 6px;
+      object-fit: cover;
+      background: var(--border);
+      flex-shrink: 0;
+      border: 1px solid var(--border);
+    }
+
+    .proj-thumb-placeholder {
+      width: 56px;
+      height: 42px;
+      border-radius: 6px;
+      background: var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .proj-card-meta { flex: 1; min-width: 0; }
+    .proj-card-name { font-size: 14px; font-weight: 600; color: var(--light); }
+    .proj-card-sub  { font-size: 12px; color: #475569; margin-top: 2px; }
+
+    .proj-card-actions { display: flex; gap: 6px; flex-shrink: 0; }
+
+    .proj-card-body {
+      display: none;
+      padding: 0 18px 18px;
+      border-top: 1px solid var(--border);
+    }
+
+    .proj-card-body.open { display: block; }
+
+    .proj-card-body .form-grid { margin-top: 16px; }
+
+    /* Image upload zone */
+    .img-upload-zone {
+      border: 2px dashed var(--border);
+      border-radius: 10px;
+      padding: 20px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      background: var(--surface);
+      position: relative;
+    }
+
+    .img-upload-zone:hover,
+    .img-upload-zone.drag-over {
+      border-color: var(--accent);
+      background: var(--adim);
+    }
+
+    .img-upload-zone input[type="file"] {
+      position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+    }
+
+    .img-upload-zone .upload-preview {
+      width: 100%;
+      max-height: 140px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      display: none;
+    }
+
+    .img-upload-zone .upload-hint { font-size: 12px; color: #475569; line-height: 1.6; }
+    .img-upload-zone .upload-hint strong { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     LOGIN SCREEN
+═══════════════════════════════════════════════════════════ -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="logo">🔐</div>
+    <h2>CV Admin Panel</h2>
+    <p>Enter your admin password to continue</p>
+    <input type="password" id="pwd-input" placeholder="Password" autocomplete="current-password" />
+    <div id="login-error"></div>
+    <button class="btn btn-primary" onclick="doLogin()">Sign In</button>
+    <p style="margin-top:16px; font-size:11px; color:#334155;">
+      Default password: <code style="color:var(--accent)">admin2024</code><br/>
+      Change it in this file → <code>ADMIN_PWD_HASH</code>
+    </p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     ADMIN SCREEN
+═══════════════════════════════════════════════════════════ -->
+<div id="admin-screen">
+
+  <!-- Top bar -->
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <span class="top-bar-logo">⚡ CV Admin</span>
+      <span class="top-bar-badge">localhost</span>
+    </div>
+    <div class="top-bar-right">
+      <button class="btn btn-sm btn-info" onclick="exportJSON()">⬇ Export JSON</button>
+      <a href="index.html" target="_blank" class="btn btn-sm btn-ghost">👁 Preview Site</a>
+      <button class="btn btn-sm btn-success" onclick="saveAll()">💾 Save Changes</button>
+      <button class="btn btn-sm btn-ghost" onclick="doLogout()">Sign Out</button>
+    </div>
+  </div>
+
+  <div class="admin-body">
+
+    <!-- Sidebar nav -->
+    <nav class="sidebar-nav">
+      <div class="nav-label">Sections</div>
+      <button class="nav-item active" data-tab="personal" onclick="switchTab('personal',this)">
+        <span class="icon">👤</span> Personal Info
+      </button>
+      <button class="nav-item" data-tab="about" onclick="switchTab('about',this)">
+        <span class="icon">📝</span> Summary & About
+      </button>
+      <button class="nav-item" data-tab="experience" onclick="switchTab('experience',this)">
+        <span class="icon">💼</span> Experience
+      </button>
+      <button class="nav-item" data-tab="skills" onclick="switchTab('skills',this)">
+        <span class="icon">🛠</span> Skills & Stack
+      </button>
+      <button class="nav-item" data-tab="education" onclick="switchTab('education',this)">
+        <span class="icon">🎓</span> Education
+      </button>
+      <button class="nav-item" data-tab="portfolio" onclick="switchTab('portfolio',this)">
+        <span class="icon">🖼</span> Portfolio
+      </button>
+
+      <div class="nav-label">Tools</div>
+      <button class="nav-item" onclick="resetAll()">
+        <span class="icon">🔄</span> Reset to Default
+      </button>
+      <button class="nav-item" onclick="exportJSON()">
+        <span class="icon">📤</span> Export JSON
+      </button>
+      <button class="nav-item" onclick="importJSON()">
+        <span class="icon">📥</span> Import JSON
+      </button>
+    </nav>
+
+    <!-- Main content area -->
+    <div class="main-content">
+
+      <!-- ── Personal Info ─────────────────────────────── -->
+      <div id="tab-personal" class="tab-panel active">
+        <div class="section-header">
+          <div class="section-icon">👤</div>
+          <h2>Personal Information</h2>
+        </div>
+
+        <!-- Avatar upload card -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">🖼 Profile Photo</span>
+            <span class="card-badge">Sidebar avatar</span>
+          </div>
+          <div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap">
+            <!-- Preview -->
+            <div style="flex-shrink:0;text-align:center">
+              <img id="avatar-preview" src="img/main_sontung.jpg"
+                style="width:110px;height:110px;border-radius:50%;object-fit:cover;border:3px solid var(--accent);box-shadow:0 0 0 5px var(--adim)"
+                alt="Avatar preview" />
+              <div style="font-size:11px;color:#475569;margin-top:8px">Current photo</div>
+            </div>
+            <!-- Upload zone -->
+            <div style="flex:1;min-width:220px">
+              <div class="img-upload-zone" id="avatar-upload-zone"
+                ondragover="event.preventDefault();this.classList.add('drag-over')"
+                ondragleave="this.classList.remove('drag-over')"
+                ondrop="handleAvatarDrop(event)">
+                <input type="file" id="avatar-file-input" accept="image/*" onchange="handleAvatarFile(event)" />
+                <div class="upload-hint">
+                  <strong>Click or drag & drop</strong> to upload a new photo<br/>
+                  Recommended: square image, min 200×200px<br/>
+                  JPG / PNG / WebP
+                </div>
+              </div>
+              <div style="margin-top:10px">
+                <label style="display:block;margin-bottom:6px">Or enter image path / URL</label>
+                <input type="text" id="f-avatar-path" placeholder="img/main_sontung.jpg" oninput="onAvatarPathChange()" />
+                <span class="field-hint">Path relative to site root, or a full https:// URL</span>
+              </div>
+              <button class="btn btn-danger btn-sm" style="margin-top:10px" onclick="clearAvatar()">✕ Remove uploaded photo</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">🪪 Identity</span>
+          </div>
+          <div class="form-grid">
+            <div class="field">
+              <label>Full Name</label>
+              <input type="text" id="f-name" placeholder="Tung Ha Son" />
+            </div>
+            <div class="field">
+              <label>Job Title (Sidebar & Home)</label>
+              <input type="text" id="f-title" placeholder="Backend Developer" />
+            </div>
+            <div class="field">
+              <label>Home Stack Subtitle</label>
+              <input type="text" id="f-stack" placeholder="Go · Node.js · React · Kubernetes" />
+            </div>
+            <div class="field">
+              <label>Location</label>
+              <input type="text" id="f-location" placeholder="HCM City, Viet Nam" />
+            </div>
+            <div class="field">
+              <label>Phone</label>
+              <input type="text" id="f-phone" placeholder="+(84) 911420295" />
+            </div>
+            <div class="field">
+              <label>Email</label>
+              <input type="email" id="f-email" placeholder="hasontung.work@gmail.com" />
+            </div>
+            <div class="field">
+              <label>Hobbies</label>
+              <input type="text" id="f-hobbies" placeholder="Football &amp; Basketball" />
+            </div>
+          </div>
+        </div>
+
+        <!-- CV PDF upload card -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">📄 CV / Resume PDF</span>
+            <span class="card-badge">Download CV button</span>
+          </div>
+          <div class="form-grid full">
+            <div class="field">
+              <label>Upload new CV PDF</label>
+              <div class="img-upload-zone" id="cv-upload-zone"
+                ondragover="event.preventDefault();this.classList.add('drag-over')"
+                ondragleave="this.classList.remove('drag-over')"
+                ondrop="handleCvDrop(event)">
+                <input type="file" id="cv-file-input" accept=".pdf,application/pdf" onchange="handleCvFile(event)" />
+                <div class="upload-hint" id="cv-upload-hint">
+                  <strong>Click or drag & drop</strong> a PDF file here<br/>
+                  The file will be saved as a downloadable blob link in the browser
+                </div>
+              </div>
+              <div id="cv-file-status" style="margin-top:8px;font-size:12px;color:#475569"></div>
+            </div>
+            <div class="field">
+              <label>Or set path / URL manually</label>
+              <input type="text" id="f-cvlink" placeholder="cv/CV Template IT.pdf" />
+              <span class="field-hint">Path relative to site root or a full URL. Used when no file is uploaded above.</span>
+            </div>
+            <div class="field" style="margin-top:4px">
+              <button class="btn btn-danger btn-sm" onclick="clearCvUpload()">✕ Remove uploaded PDF</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">🔗 Links</span>
+          </div>
+          <div class="form-grid">
+            <div class="field">
+              <label>LinkedIn URL</label>
+              <input type="url" id="f-linkedin" placeholder="https://www.linkedin.com/in/tunghason" />
+            </div>
+            <div class="field">
+              <label>GitHub URL</label>
+              <input type="url" id="f-github" placeholder="https://github.com/sontung0511" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Summary & About ───────────────────────────── -->
+      <div id="tab-about" class="tab-panel">
+        <div class="section-header">
+          <div class="section-icon">📝</div>
+          <h2>Summary & About Me</h2>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">📄 Professional Summary</span>
+            <span class="card-badge">About Me section</span>
+          </div>
+          <div class="field">
+            <label>Summary Paragraph</label>
+            <textarea id="f-summary" rows="5" placeholder="I'm a Backend Developer with experience..."></textarea>
+            <span class="field-hint">Displayed in the About Me section below the page title.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Experience ────────────────────────────────── -->
+      <div id="tab-experience" class="tab-panel">
+        <div class="section-header">
+          <div class="section-icon">💼</div>
+          <h2>Work Experience</h2>
+        </div>
+
+        <!-- Job 1 -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">🏢 Job 1 <span class="card-badge">Most Recent</span></span>
+          </div>
+          <div class="form-grid three">
+            <div class="field">
+              <label>Period</label>
+              <input type="text" id="f-exp1-period" placeholder="Jan 2024 - now" />
+            </div>
+            <div class="field">
+              <label>Company</label>
+              <input type="text" id="f-exp1-company" placeholder="Phenikaa MaaS (GoLabs)" />
+            </div>
+            <div class="field">
+              <label>Job Title</label>
+              <input type="text" id="f-exp1-title" placeholder="Backend Developer" />
+            </div>
+          </div>
+          <div class="field">
+            <label>Description</label>
+            <textarea id="f-exp1-desc" rows="3" placeholder="Short description shown in Resume timeline..."></textarea>
+          </div>
+          <div class="field" style="margin-top:12px">
+            <label>Technologies (shown in Resume)</label>
+            <input type="text" id="f-exp1-tech" placeholder="Nodejs, Go, Gitlab, K8s, Redis..." />
+          </div>
+        </div>
+
+        <!-- Job 2 -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">🏢 Job 2</span>
+          </div>
+          <div class="form-grid three">
+            <div class="field">
+              <label>Period</label>
+              <input type="text" id="f-exp2-period" placeholder="Jan 2023 - Oct 2023" />
+            </div>
+            <div class="field">
+              <label>Company</label>
+              <input type="text" id="f-exp2-company" placeholder="VieON — DatVietVAC Group Holdings" />
+            </div>
+            <div class="field">
+              <label>Job Title</label>
+              <input type="text" id="f-exp2-title" placeholder="Full-Stack Developer" />
+            </div>
+          </div>
+          <div class="field">
+            <label>Description</label>
+            <textarea id="f-exp2-desc" rows="3" placeholder="Short description..."></textarea>
+          </div>
+          <div class="field" style="margin-top:12px">
+            <label>Technologies</label>
+            <input type="text" id="f-exp2-tech" placeholder="React, Redux, Tailwind CSS, Docker..." />
+          </div>
+        </div>
+
+        <!-- Job 3 -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">🏢 Job 3</span>
+          </div>
+          <div class="form-grid three">
+            <div class="field">
+              <label>Period</label>
+              <input type="text" id="f-exp3-period" placeholder="2022 - 2023" />
+            </div>
+            <div class="field">
+              <label>Company</label>
+              <input type="text" id="f-exp3-company" placeholder="Freelancer" />
+            </div>
+            <div class="field">
+              <label>Job Title</label>
+              <input type="text" id="f-exp3-title" placeholder="Backend &amp; Frontend Developer" />
+            </div>
+          </div>
+          <div class="field">
+            <label>Description</label>
+            <textarea id="f-exp3-desc" rows="3" placeholder="Short description..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Skills & Stack ────────────────────────────── -->
+      <div id="tab-skills" class="tab-panel">
+        <div class="section-header">
+          <div class="section-icon">🛠</div>
+          <h2>Skills & Technical Stack</h2>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">⚙️ Technical Stacks</span>
+            <span class="card-badge">Resume → Skills column</span>
+          </div>
+          <div class="form-grid full">
+            <div class="field">
+              <label>Programming Languages</label>
+              <input type="text" id="f-skill-languages" placeholder="Go, JavaScript (TypeScript, JSX)" />
+            </div>
+            <div class="field">
+              <label>Frameworks &amp; Libraries</label>
+              <input type="text" id="f-skill-frameworks" placeholder="go-redis/redis, gorm, Gin, Echo, NextJS, ReactJS, NodeJS, NestJS" />
+            </div>
+            <div class="field">
+              <label>Coding Principles</label>
+              <input type="text" id="f-skill-principles" placeholder="Clean architecture, Clean code, Design patterns" />
+            </div>
+            <div class="field">
+              <label>Databases</label>
+              <input type="text" id="f-skill-databases" placeholder="MySQL, PostgreSQL, MongoDB, ClickHouse, Redis" />
+            </div>
+            <div class="field">
+              <label>DevOps &amp; Tools</label>
+              <input type="text" id="f-skill-devops" placeholder="Kubernetes (K8s), Docker, Gitlab CI/CD, Nginx, Argo, Grafana, Postman, Git, Jira, Figma" />
+            </div>
+            <div class="field">
+              <label>Soft Skills</label>
+              <input type="text" id="f-soft-skills" placeholder="Team Work, Communication, Critical Thinking, Problem Solving" />
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">🏷 Knowledge Tags</span>
+            <span class="card-badge">Resume → tag pills</span>
+          </div>
+          <div class="field">
+            <label>Tags (comma-separated)</label>
+            <input type="text" id="f-knowledges" oninput="previewTags()" placeholder="ReactJs, TypeScript, NextJS, NodeJS, Golang, K8s, Docker, Git..." />
+          </div>
+          <div id="tag-preview" class="tag-preview"></div>
+          <span class="field-hint">Preview of how tags will appear on the site.</span>
+        </div>
+      </div>
+
+      <!-- ── Education ─────────────────────────────────── -->
+      <div id="tab-education" class="tab-panel">
+        <div class="section-header">
+          <div class="section-icon">🎓</div>
+          <h2>Education</h2>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">🏫 University / Degree</span>
+          </div>
+          <div class="form-grid">
+            <div class="field">
+              <label>Period</label>
+              <input type="text" id="f-edu-period" placeholder="2019 - 2023" />
+            </div>
+            <div class="field">
+              <label>School</label>
+              <input type="text" id="f-edu-school" placeholder="Ton Duc Thang University (TDTU)" />
+            </div>
+            <div class="field">
+              <label>Degree / Major</label>
+              <input type="text" id="f-edu-title" placeholder="Computer Science" />
+            </div>
+            <div class="field">
+              <label>Grade</label>
+              <input type="text" id="f-edu-grade" placeholder="Good" />
+            </div>
+            <div class="field">
+              <label>English Level</label>
+              <input type="text" id="f-edu-english" placeholder="B1" />
+            </div>
+          </div>
+          <div class="field">
+            <label>Details (full text shown in timeline)</label>
+            <textarea id="f-edu-desc" rows="3" placeholder="Grade: Good · English level: B1&#10;Projects in web development, data analysis, and big data."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Portfolio ─────────────────────────────────── -->
+      <div id="tab-portfolio" class="tab-panel">
+        <div class="section-header">
+          <div class="section-icon">🖼</div>
+          <h2>Portfolio Projects</h2>
+        </div>
+
+        <div class="card" style="margin-bottom:16px">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+            <div>
+              <div class="card-title">Manage your portfolio projects</div>
+              <div class="field-hint" style="margin-top:4px">Drag to reorder · Max 9 projects recommended</div>
+            </div>
+            <button class="btn btn-success btn-sm" onclick="addProject()">＋ Add Project</button>
+          </div>
+        </div>
+
+        <div id="portfolio-list">
+          <!-- project cards rendered by JS -->
+        </div>
+
+        <div id="portfolio-empty" style="display:none;text-align:center;padding:40px;color:#475569">
+          <div style="font-size:40px;margin-bottom:12px">🖼</div>
+          <div style="font-size:14px">No projects yet. Click <strong>＋ Add Project</strong> to start.</div>
+        </div>
+      </div>
+
+    </div><!-- /main-content -->
+  </div><!-- /admin-body -->
+</div><!-- /admin-screen -->
+
+<!-- Toast -->
+<div id="save-toast">✅ Changes saved!</div>
+
+<!-- Hidden file input for JSON import -->
+<input type="file" id="import-file" accept=".json" style="display:none" onchange="handleImport(event)" />
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   PASSWORD / AUTH
+   Default password: admin2024
+   To change: run  sha256('yourNewPassword')  in console,
+   paste hash into ADMIN_PWD_HASH below.
+═══════════════════════════════════════════════════════════ */
+var ADMIN_PWD_HASH = 'b8b8eb83374c0bf3b1c3224159f6119dbfff1b7ed6dfecdd80d4e8a895790a34';
+// that hash = SHA-256('admin2024')
+
+async function sha256(msg) {
+  var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(msg));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+async function doLogin() {
+  var pwd = document.getElementById('pwd-input').value;
+  var hash = await sha256(pwd);
+  if (hash === ADMIN_PWD_HASH) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('admin-screen').style.display = 'flex';
+    loadData();
+  } else {
+    document.getElementById('login-error').textContent = 'Incorrect password. Try again.';
+    document.getElementById('pwd-input').value = '';
+    document.getElementById('pwd-input').focus();
+  }
+}
+
+function doLogout() {
+  document.getElementById('admin-screen').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('pwd-input').value = '';
+}
+
+document.getElementById('pwd-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') doLogin();
+});
+
+/* ═══════════════════════════════════════════════════════════
+   TABS
+═══════════════════════════════════════════════════════════ */
+function switchTab(tabId, btn) {
+  document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
+  document.querySelectorAll('.nav-item[data-tab]').forEach(function(b){ b.classList.remove('active'); });
+  document.getElementById('tab-' + tabId).classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+/* ═══════════════════════════════════════════════════════════
+   DEFAULT DATA
+═══════════════════════════════════════════════════════════ */
+var DEFAULTS = {
+  personal: {
+    name:     'Tung Ha Son',
+    title:    'Backend Developer',
+    stack:    'Go · Node.js · React · Kubernetes',
+    phone:    '+(84) 911420295',
+    email:    'hasontung.work@gmail.com',
+    location: 'HCM City, Viet Nam',
+    hobbies:  'Football & Basketball',
+    linkedin: 'https://www.linkedin.com/in/tunghason',
+    github:   'https://github.com/sontung0511',
+    cvLink:   'cv/CV Template IT.pdf',
+  },
+  about: {
+    summary: "I'm a Backend Developer with experience specializing in React, Node.js, GoLang, and Kubernetes. I have a strong background in building scalable web applications and efficiently solving complex technical challenges. Passionate about innovation and advanced web technologies, I'm seeking an opportunity to apply my expertise and further enhance my skills in developing modern, high-performance solutions.",
+  },
+  exp1: {
+    period:      'Jan 2024 - now',
+    company:     'Phenikaa MaaS (GoLabs)',
+    title:       'Backend Developer',
+    description: 'Developed and implemented a payment system for buses and metro subways, enabling contactless transactions using Visa, MasterCard, NAPAS, and mobile wallets. Key projects: Rain and Flood Map of Da Nang, App Busmap, VinBus.',
+    technologies:'Nodejs, Go, Gitlab, K8s, Redis, Nginx, Argo, Grafana, Docker, ClickHouse, MongoDB, PostgreSQL, Postman',
+  },
+  exp2: {
+    period:      'Jan 2023 - Oct 2023',
+    company:     'VieON — DatVietVAC Group Holdings',
+    title:       'Full-Stack Developer',
+    description: 'Designed and developed web applications using ReactJS and NextJS. Expertise in UI implementation, documentation, and maintenance. Deployed web applications using CI/CD to testing, development, and production environments. Key project: VieON OTT Platform.',
+    technologies:'React, Redux, React Testing Library, Gitlab, Docker, Postman, Tailwind CSS, Bootstrap, Framer Motion, Material UI',
+  },
+  exp3: {
+    period:      '2022 - 2023',
+    company:     'Freelancer',
+    title:       'Backend & Frontend Developer',
+    description: 'Worked on various client projects — built and customized features for web applications according to client requirements.',
+    technologies:'',
+  },
+  edu: {
+    period:  '2019 - 2023',
+    school:  'Ton Duc Thang University (TDTU)',
+    degree:  'Computer Science',
+    grade:   'Good',
+    english: 'B1',
+    details: 'Grade: Good · English level: B1\nProjects in web development, data analysis, and big data.',
+  },
+  skills: {
+    languages:  'Go, JavaScript (TypeScript, JSX)',
+    frameworks: 'go-redis/redis, gorm, Gin, Echo, NextJS, ReactJS, NodeJS, NestJS',
+    principles: 'Clean architecture, Clean code, Design patterns',
+    databases:  'MySQL, PostgreSQL, MongoDB, ClickHouse, Redis',
+    devops:     'Kubernetes (K8s), Docker, Gitlab CI/CD, Nginx, Argo, Grafana, Postman, Git, Jira, Figma',
+    soft:       'Team Work, Communication, Critical Thinking, Problem Solving',
+    knowledges: 'ReactJs, TypeScript, NextJS, NodeJS, NestJS, Golang, PostgreSQL, MongoDB, ClickHouse, Redis, K8s, Docker, Git, Jira, Figma',
+  },
+};
+
+/* ═══════════════════════════════════════════════════════════
+   LOAD / SAVE
+═══════════════════════════════════════════════════════════ */
+function loadData() {
+  var raw = localStorage.getItem('cv_admin_data');
+  var d = raw ? JSON.parse(raw) : DEFAULTS;
+
+  var p = d.personal || DEFAULTS.personal;
+  var a = d.about    || DEFAULTS.about;
+  var s = d.skills   || DEFAULTS.skills;
+  var edu = d.edu    || DEFAULTS.edu;
+
+  // Personal
+  setVal('f-name',     p.name);
+  setVal('f-title',    p.title);
+  setVal('f-stack',    p.stack);
+  setVal('f-phone',    p.phone);
+  setVal('f-email',    p.email);
+  setVal('f-location', p.location);
+  setVal('f-hobbies',  p.hobbies);
+  setVal('f-linkedin', p.linkedin);
+  setVal('f-github',   p.github);
+  setVal('f-cvlink',   p.cvLink);
+
+  // Avatar
+  var avatarSrc = d.avatarData || d.avatarPath || p.avatarPath || 'img/main_sontung.jpg';
+  setVal('f-avatar-path', d.avatarPath || p.avatarPath || '');
+  var ap = document.getElementById('avatar-preview');
+  if (ap) ap.src = avatarSrc;
+
+  // CV PDF
+  setVal('f-cvlink', p.cvLink);
+  updateCvStatus(d.cvData, d.cvFileName);
+
+  // About
+  setVal('f-summary', a.summary);
+
+  // Experience
+  ['1','2','3'].forEach(function(n) {
+    var exp = d['exp'+n] || DEFAULTS['exp'+n];
+    if (!exp) return;
+    setVal('f-exp'+n+'-period',  exp.period);
+    setVal('f-exp'+n+'-company', exp.company);
+    setVal('f-exp'+n+'-title',   exp.title);
+    setVal('f-exp'+n+'-desc',    exp.description);
+    setVal('f-exp'+n+'-tech',    exp.technologies);
+  });
+
+  // Education
+  setVal('f-edu-period',  edu.period);
+  setVal('f-edu-school',  edu.school);
+  setVal('f-edu-title',   edu.degree);
+  setVal('f-edu-grade',   edu.grade);
+  setVal('f-edu-english', edu.english);
+  setVal('f-edu-desc',    edu.details);
+
+  // Skills
+  setVal('f-skill-languages',  s.languages);
+  setVal('f-skill-frameworks', s.frameworks);
+  setVal('f-skill-principles', s.principles);
+  setVal('f-skill-databases',  s.databases);
+  setVal('f-skill-devops',     s.devops);
+  setVal('f-soft-skills',      s.soft);
+  setVal('f-knowledges',       s.knowledges);
+  previewTags();
+
+  // Portfolio
+  loadPortfolio(d);
+}
+
+function getVal(id) {
+  var el = document.getElementById(id);
+  return el ? el.value.trim() : '';
+}
+
+function setVal(id, val) {
+  var el = document.getElementById(id);
+  if (el && val !== undefined && val !== null) el.value = val;
+}
+
+function buildData() {
+  // read previously saved avatar/cv blobs from storage (they stay unless cleared)
+  var existing = {};
+  try { existing = JSON.parse(localStorage.getItem('cv_admin_data') || '{}'); } catch(e) {}
+
+  return {
+    avatarData:   existing.avatarData   || '',
+    avatarPath:   getVal('f-avatar-path'),
+    cvData:       existing.cvData       || '',
+    cvFileName:   existing.cvFileName   || '',
+    personal: {
+      name:       getVal('f-name'),
+      title:      getVal('f-title'),
+      stack:      getVal('f-stack'),
+      phone:      getVal('f-phone'),
+      email:      getVal('f-email'),
+      location:   getVal('f-location'),
+      hobbies:    getVal('f-hobbies'),
+      linkedin:   getVal('f-linkedin'),
+      github:     getVal('f-github'),
+      cvLink:     getVal('f-cvlink'),
+      avatarPath: getVal('f-avatar-path'),
+    },
+    about: { summary: getVal('f-summary') },
+    exp1: {
+      period:      getVal('f-exp1-period'),
+      company:     getVal('f-exp1-company'),
+      title:       getVal('f-exp1-title'),
+      description: getVal('f-exp1-desc'),
+      technologies:getVal('f-exp1-tech'),
+    },
+    exp2: {
+      period:      getVal('f-exp2-period'),
+      company:     getVal('f-exp2-company'),
+      title:       getVal('f-exp2-title'),
+      description: getVal('f-exp2-desc'),
+      technologies:getVal('f-exp2-tech'),
+    },
+    exp3: {
+      period:      getVal('f-exp3-period'),
+      company:     getVal('f-exp3-company'),
+      title:       getVal('f-exp3-title'),
+      description: getVal('f-exp3-desc'),
+      technologies:'',
+    },
+    edu: {
+      period:  getVal('f-edu-period'),
+      school:  getVal('f-edu-school'),
+      degree:  getVal('f-edu-title'),
+      grade:   getVal('f-edu-grade'),
+      english: getVal('f-edu-english'),
+      details: getVal('f-edu-desc'),
+    },
+    skills: {
+      languages:  getVal('f-skill-languages'),
+      frameworks: getVal('f-skill-frameworks'),
+      principles: getVal('f-skill-principles'),
+      databases:  getVal('f-skill-databases'),
+      devops:     getVal('f-skill-devops'),
+      soft:       getVal('f-soft-skills'),
+      knowledges: getVal('f-knowledges'),
+    },
+    portfolio: portfolioProjects,
+  };
+}
+
+function saveAll() {
+  var data = buildData();
+  localStorage.setItem('cv_admin_data', JSON.stringify(data));
+  showToast('✅ Changes saved! Reload the site to see updates.');
+}
+
+function showToast(msg) {
+  var t = document.getElementById('save-toast');
+  t.textContent = msg;
+  t.style.display = 'block';
+  setTimeout(function(){ t.style.display = 'none'; }, 3000);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESET
+═══════════════════════════════════════════════════════════ */
+function resetAll() {
+  if (!confirm('Reset all fields to default values? This will remove your saved changes.')) return;
+  localStorage.removeItem('cv_admin_data');
+  loadData();
+  showToast('🔄 Reset to defaults.');
+}
+
+/* ═══════════════════════════════════════════════════════════
+   EXPORT / IMPORT JSON
+═══════════════════════════════════════════════════════════ */
+function exportJSON() {
+  var data = buildData();
+  var json = JSON.stringify(data, null, 2);
+  var blob = new Blob([json], { type: 'application/json' });
+  var url  = URL.createObjectURL(blob);
+  var a    = document.createElement('a');
+  a.href     = url;
+  a.download = 'cv-data.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('📤 cv-data.json downloaded!');
+}
+
+function importJSON() {
+  document.getElementById('import-file').click();
+}
+
+function handleImport(e) {
+  var file = e.target.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(ev) {
+    try {
+      var data = JSON.parse(ev.target.result);
+      localStorage.setItem('cv_admin_data', JSON.stringify(data));
+      loadData();
+      showToast('📥 JSON imported successfully!');
+    } catch(ex) {
+      alert('Invalid JSON file.');
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TAG PREVIEW
+═══════════════════════════════════════════════════════════ */
+function previewTags() {
+  var val = getVal('f-knowledges');
+  var container = document.getElementById('tag-preview');
+  if (!val) { container.innerHTML = '<span style="color:#334155;font-size:12px">No tags yet…</span>'; return; }
+  container.innerHTML = val.split(',')
+    .filter(function(t){ return t.trim(); })
+    .map(function(t){ return '<span class="tag">' + t.trim() + '</span>'; })
+    .join('');
+}
+
+/* ═══════════════════════════════════════════════════════════
+   AUTO-SAVE on blur (optional convenience)
+═══════════════════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('input, textarea').forEach(function(el) {
+    el.addEventListener('blur', function() {
+      if (document.getElementById('admin-screen').style.display !== 'none') {
+        saveAll();
+      }
+    });
+  });
+});
+
+/* ═══════════════════════════════════════════════════════════
+   PORTFOLIO MANAGEMENT
+═══════════════════════════════════════════════════════════ */
+var CATEGORIES = [
+  { val: 'category_reactjs', label: 'NextJs' },
+  { val: 'category_react',   label: 'ReactJs' },
+  { val: 'category_vanilla', label: 'TypeScript' },
+  { val: 'category_nodejs',  label: 'NodeJS' },
+  { val: 'category_golang',  label: 'Golang' },
+];
+
+// in-memory array, synced to d.portfolio in buildData()
+var portfolioProjects = [];
+
+function loadPortfolio(data) {
+  portfolioProjects = (data && data.portfolio) ? JSON.parse(JSON.stringify(data.portfolio)) : getDefaultPortfolio();
+  renderPortfolioList();
+}
+
+function getDefaultPortfolio() {
+  return [
+    { id: pid(), name: 'Voting Rap Viet 3',         category: 'category_reactjs', image: 'img/portfolio/rapviet3.png', imageData: '', link: 'src/portfolio-rapviet3.html', linkType: 'internal', description: 'Voting app for Rap Viet Season 3 using Next.js.' },
+    { id: pid(), name: 'Learning English with Game', category: 'category_reactjs', image: 'img/portfolio/game.png',     imageData: '', link: 'src/portfolio-space.html',    linkType: 'internal', description: 'Educational game app for learning English.' },
+    { id: pid(), name: 'Vieon Web App',              category: 'category_vanilla', image: 'img/portfolio/webvieon.png', imageData: '', link: 'https://vieon.vn/',            linkType: 'external', description: 'VieON OTT streaming platform.' },
+    { id: pid(), name: 'Web Shop',                   category: 'category_reactjs', image: 'img/portfolio/ecom.png',     imageData: '', link: 'src/portfolio-drone.html',     linkType: 'internal', description: 'E-commerce web application.' },
+  ];
+}
+
+function pid() { return 'p' + Date.now() + Math.random().toString(36).slice(2,6); }
+
+function renderPortfolioList() {
+  var list  = document.getElementById('portfolio-list');
+  var empty = document.getElementById('portfolio-empty');
+  if (!portfolioProjects.length) {
+    list.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+  list.innerHTML = portfolioProjects.map(function(proj, idx) {
+    var thumbHtml = (proj.imageData || proj.image)
+      ? '<img class="proj-thumb" src="' + (proj.imageData || escA(proj.image)) + '" alt="" />'
+      : '<div class="proj-thumb-placeholder">🖼</div>';
+
+    var catLabel = (CATEGORIES.find(function(c){ return c.val === proj.category; }) || {}).label || proj.category || '—';
+
+    var catOptions = CATEGORIES.map(function(c) {
+      return '<option value="' + c.val + '"' + (proj.category === c.val ? ' selected' : '') + '>' + c.label + '<\/option>';
+    }).join('');
+
+    var imgPreviewStyle = (proj.imageData || proj.image) ? 'display:block' : 'display:none';
+    var imgPreviewSrc   = proj.imageData || escA(proj.image) || '';
+
+    return '<div class="proj-card" id="pcard-' + proj.id + '">' +
+      '<div class="proj-card-header" onclick="toggleCard(\'' + proj.id + '\')">' +
+        thumbHtml +
+        '<div class="proj-card-meta">' +
+          '<div class="proj-card-name">' + escH(proj.name || 'Untitled Project') + '<\/div>' +
+          '<div class="proj-card-sub">' + catLabel + (proj.link ? ' · ' + escH(proj.link) : '') + '<\/div>' +
+        '<\/div>' +
+        '<div class="proj-card-actions" onclick="event.stopPropagation()">' +
+          (idx > 0 ? '<button class="btn btn-sm btn-ghost" title="Move up" onclick="moveProject(' + idx + ',-1)">↑<\/button>' : '') +
+          (idx < portfolioProjects.length-1 ? '<button class="btn btn-sm btn-ghost" title="Move down" onclick="moveProject(' + idx + ',1)">↓<\/button>' : '') +
+          '<button class="btn btn-sm btn-danger" onclick="removeProject(\'' + proj.id + '\')">✕<\/button>' +
+        '<\/div>' +
+      '<\/div>' +
+
+      '<div class="proj-card-body" id="pbody-' + proj.id + '">' +
+        '<div class="form-grid">' +
+          '<div class="field span2">' +
+            '<label>Project Name<\/label>' +
+            '<input type="text" value="' + escA(proj.name) + '" onchange="updateProject(\'' + proj.id + '\',\'name\',this.value)" placeholder="My Project" \/>' +
+          '<\/div>' +
+          '<div class="field">' +
+            '<label>Category<\/label>' +
+            '<select onchange="updateProject(\'' + proj.id + '\',\'category\',this.value)">' + catOptions + '<\/select>' +
+          '<\/div>' +
+          '<div class="field">' +
+            '<label>Link Type<\/label>' +
+            '<select onchange="updateProject(\'' + proj.id + '\',\'linkType\',this.value)">' +
+              '<option value="internal"' + (proj.linkType!=='external'?' selected':'') + '>Internal (Detail page)<\/option>' +
+              '<option value="external"' + (proj.linkType==='external'?' selected':'') + '>External URL<\/option>' +
+            '<\/select>' +
+          '<\/div>' +
+          '<div class="field span2">' +
+            '<label>Link / URL<\/label>' +
+            '<input type="text" value="' + escA(proj.link) + '" onchange="updateProject(\'' + proj.id + '\',\'link\',this.value)" placeholder="src/portfolio-x.html  or  https://..." \/>' +
+          '<\/div>' +
+          '<div class="field span2">' +
+            '<label>Description (optional, for future detail page)<\/label>' +
+            '<textarea rows="2" onchange="updateProject(\'' + proj.id + '\',\'description\',this.value)" placeholder="Short description...">' + escH(proj.description||'') + '<\/textarea>' +
+          '<\/div>' +
+        '<\/div>' +
+
+        '<!-- Image uploader -->' +
+        '<div style="margin-top:8px">' +
+          '<label style="display:block;margin-bottom:8px">Project Image<\/label>' +
+          '<div class="img-upload-zone" id="zone-' + proj.id + '"' +
+            ' ondragover="event.preventDefault();this.classList.add(\'drag-over\')"' +
+            ' ondragleave="this.classList.remove(\'drag-over\')"' +
+            ' ondrop="handleDrop(event,\'' + proj.id + '\')">' +
+            '<input type="file" accept="image/*" onchange="handleFileInput(event,\'' + proj.id + '\')" \/>' +
+            '<img class="upload-preview" id="preview-' + proj.id + '" src="' + imgPreviewSrc + '" style="' + imgPreviewStyle + '" \/>' +
+            '<div class="upload-hint">' +
+              '<strong>Click or drag & drop<\/strong> to upload image<br\/>' +
+              'Or enter image path below (e.g. <code>img/portfolio/myapp.png<\/code>)' +
+            '<\/div>' +
+          '<\/div>' +
+          '<input type="text" value="' + escA(proj.image) + '" style="margin-top:8px" placeholder="img/portfolio/myproject.png" ' +
+            'onchange="updateProject(\'' + proj.id + '\',\'image\',this.value);updateProjectThumb(\'' + proj.id + '\')" \/>' +
+        '<\/div>' +
+      '<\/div>' + // proj-card-body
+    '<\/div>'; // proj-card
+  }).join('');
+}
+
+function toggleCard(id) {
+  var body = document.getElementById('pbody-' + id);
+  if (body) body.classList.toggle('open');
+}
+
+function addProject() {
+  var proj = { id: pid(), name: '', category: 'category_reactjs', image: '', imageData: '', link: '', linkType: 'internal', description: '' };
+  portfolioProjects.push(proj);
+  renderPortfolioList();
+  // auto-open new card
+  var body = document.getElementById('pbody-' + proj.id);
+  if (body) body.classList.add('open');
+  saveAll();
+}
+
+function removeProject(id) {
+  if (!confirm('Remove this project?')) return;
+  portfolioProjects = portfolioProjects.filter(function(p){ return p.id !== id; });
+  renderPortfolioList();
+  saveAll();
+}
+
+function moveProject(idx, dir) {
+  var swapIdx = idx + dir;
+  if (swapIdx < 0 || swapIdx >= portfolioProjects.length) return;
+  var tmp = portfolioProjects[idx];
+  portfolioProjects[idx] = portfolioProjects[swapIdx];
+  portfolioProjects[swapIdx] = tmp;
+  renderPortfolioList();
+  saveAll();
+}
+
+function updateProject(id, key, val) {
+  var proj = portfolioProjects.find(function(p){ return p.id === id; });
+  if (!proj) return;
+  proj[key] = val;
+  // refresh thumbnail in header
+  if (key === 'name' || key === 'category' || key === 'link') {
+    var card = document.getElementById('pcard-' + id);
+    if (card) {
+      var nameEl = card.querySelector('.proj-card-name');
+      var subEl  = card.querySelector('.proj-card-sub');
+      if (nameEl && key === 'name') nameEl.textContent = val || 'Untitled Project';
+      if (subEl) {
+        var catLabel = (CATEGORIES.find(function(c){ return c.val === proj.category; }) || {}).label || '';
+        subEl.textContent = catLabel + (proj.link ? ' · ' + proj.link : '');
+      }
+    }
+  }
+  saveAll();
+}
+
+function updateProjectThumb(id) {
+  var proj = portfolioProjects.find(function(p){ return p.id === id; });
+  if (!proj) return;
+  proj.imageData = '';
+  var thumb = document.querySelector('#pcard-' + id + ' .proj-thumb');
+  var placeholder = document.querySelector('#pcard-' + id + ' .proj-thumb-placeholder');
+  if (proj.image && thumb) {
+    thumb.src = proj.image;
+    thumb.style.display = '';
+  } else if (proj.image) {
+    // replace placeholder with img
+    if (placeholder) placeholder.outerHTML = '<img class="proj-thumb" src="' + escA(proj.image) + '" alt="" />';
+  }
+  var preview = document.getElementById('preview-' + id);
+  if (preview) { preview.src = proj.image; preview.style.display = proj.image ? 'block' : 'none'; }
+  saveAll();
+}
+
+function handleFileInput(event, id) {
+  var file = event.target.files[0];
+  if (!file) return;
+  readImageFile(file, id);
+}
+
+function handleDrop(event, id) {
+  event.preventDefault();
+  var zone = document.getElementById('zone-' + id);
+  if (zone) zone.classList.remove('drag-over');
+  var file = event.dataTransfer.files[0];
+  if (!file || !file.type.startsWith('image/')) return;
+  readImageFile(file, id);
+}
+
+function readImageFile(file, id) {
+  // Warn if > 300KB (localStorage limit concern)
+  if (file.size > 300 * 1024) {
+    if (!confirm('Image is ' + Math.round(file.size/1024) + 'KB. Large images may hit browser storage limits.\nContinue?')) return;
+  }
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var dataUrl = e.target.result;
+    var proj = portfolioProjects.find(function(p){ return p.id === id; });
+    if (proj) {
+      proj.imageData = dataUrl;
+      proj.image     = file.name;
+    }
+    // update preview
+    var preview = document.getElementById('preview-' + id);
+    if (preview) { preview.src = dataUrl; preview.style.display = 'block'; }
+    // update thumb
+    var thumb = document.querySelector('#pcard-' + id + ' .proj-thumb');
+    var ph    = document.querySelector('#pcard-' + id + ' .proj-thumb-placeholder');
+    if (thumb) { thumb.src = dataUrl; }
+    else if (ph) { ph.outerHTML = '<img class="proj-thumb" src="' + dataUrl + '" alt="" />'; }
+    saveAll();
+  };
+  reader.readAsDataURL(file);
+}
+
+function escH(str) {
+  if (!str) return '';
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function escA(str) {
+  if (!str) return '';
+  return str.replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+/* ═══════════════════════════════════════════════════════════
+   AVATAR UPLOAD
+═══════════════════════════════════════════════════════════ */
+function handleAvatarFile(event) {
+  var file = event.target.files[0];
+  if (!file) return;
+  readAvatarFile(file);
+}
+
+function handleAvatarDrop(event) {
+  event.preventDefault();
+  document.getElementById('avatar-upload-zone').classList.remove('drag-over');
+  var file = event.dataTransfer.files[0];
+  if (!file || !file.type.startsWith('image/')) return;
+  readAvatarFile(file);
+}
+
+function readAvatarFile(file) {
+  if (file.size > 400 * 1024) {
+    if (!confirm('Image is ' + Math.round(file.size/1024) + 'KB — large images increase storage usage.\nContinue?')) return;
+  }
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var dataUrl = e.target.result;
+    // update preview
+    var ap = document.getElementById('avatar-preview');
+    if (ap) ap.src = dataUrl;
+    // store in existing data immediately
+    var existing = {};
+    try { existing = JSON.parse(localStorage.getItem('cv_admin_data') || '{}'); } catch(err) {}
+    existing.avatarData = dataUrl;
+    existing.avatarPath = file.name;
+    setVal('f-avatar-path', file.name);
+    localStorage.setItem('cv_admin_data', JSON.stringify(existing));
+    showToast('🖼 Avatar saved!');
+  };
+  reader.readAsDataURL(file);
+}
+
+function onAvatarPathChange() {
+  var path = getVal('f-avatar-path');
+  if (!path) return;
+  var ap = document.getElementById('avatar-preview');
+  if (ap) ap.src = path;
+  // clear blob data — use path instead
+  var existing = {};
+  try { existing = JSON.parse(localStorage.getItem('cv_admin_data') || '{}'); } catch(err) {}
+  existing.avatarData = '';
+  existing.avatarPath = path;
+  localStorage.setItem('cv_admin_data', JSON.stringify(existing));
+}
+
+function clearAvatar() {
+  var existing = {};
+  try { existing = JSON.parse(localStorage.getItem('cv_admin_data') || '{}'); } catch(err) {}
+  existing.avatarData = '';
+  existing.avatarPath = '';
+  localStorage.setItem('cv_admin_data', JSON.stringify(existing));
+  setVal('f-avatar-path', '');
+  var ap = document.getElementById('avatar-preview');
+  if (ap) ap.src = 'img/main_sontung.jpg';
+  document.getElementById('avatar-file-input').value = '';
+  showToast('🔄 Avatar reset to default.');
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CV PDF UPLOAD
+═══════════════════════════════════════════════════════════ */
+function handleCvFile(event) {
+  var file = event.target.files[0];
+  if (!file) return;
+  readCvFile(file);
+}
+
+function handleCvDrop(event) {
+  event.preventDefault();
+  document.getElementById('cv-upload-zone').classList.remove('drag-over');
+  var file = event.dataTransfer.files[0];
+  if (!file || file.type !== 'application/pdf') { alert('Please drop a PDF file.'); return; }
+  readCvFile(file);
+}
+
+function readCvFile(file) {
+  var sizeMB = (file.size / 1024 / 1024).toFixed(1);
+  if (file.size > 5 * 1024 * 1024) {
+    if (!confirm('PDF is ' + sizeMB + 'MB — this may exceed localStorage limits (5MB).\nFor large CVs, host the file externally and paste the URL instead.\nContinue anyway?')) return;
+  }
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var dataUrl = e.target.result;
+    var existing = {};
+    try { existing = JSON.parse(localStorage.getItem('cv_admin_data') || '{}'); } catch(err) {}
+    existing.cvData     = dataUrl;
+    existing.cvFileName = file.name;
+    localStorage.setItem('cv_admin_data', JSON.stringify(existing));
+    updateCvStatus(dataUrl, file.name);
+    showToast('📄 CV PDF saved! (' + sizeMB + ' MB)');
+  };
+  reader.readAsDataURL(file);
+}
+
+function updateCvStatus(cvData, cvFileName) {
+  var hint = document.getElementById('cv-upload-hint');
+  var status = document.getElementById('cv-file-status');
+  if (!hint || !status) return;
+  if (cvData) {
+    hint.innerHTML = '<strong>✅ PDF uploaded:</strong> ' + (cvFileName || 'cv.pdf') + '<br/>Will be used as the CV download on the site.';
+    status.innerHTML = '<span style="color:var(--accent)">📎 ' + (cvFileName || 'cv.pdf') + ' is active</span> — visitors will download this file.';
+  } else {
+    hint.innerHTML = '<strong>Click or drag & drop</strong> a PDF file here<br/>The file will be saved as a downloadable blob link in the browser';
+    status.textContent = '';
+  }
+}
+
+function clearCvUpload() {
+  var existing = {};
+  try { existing = JSON.parse(localStorage.getItem('cv_admin_data') || '{}'); } catch(err) {}
+  existing.cvData     = '';
+  existing.cvFileName = '';
+  localStorage.setItem('cv_admin_data', JSON.stringify(existing));
+  document.getElementById('cv-file-input').value = '';
+  updateCvStatus('', '');
+  showToast('🔄 CV upload removed. Using path/URL from field below.');
+}
+</script>
+</body>
+</html>

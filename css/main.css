@@ -3021,3 +3021,88 @@ blockquote {
     font-size: 18px;
   }
 }
+/* ============================================================
+   Custom additions - Portfolio updates
+============================================================ */
+
+/* Home section contact info row */
+.home-contact-info {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  font-size: 14px;
+  color: #ccc;
+}
+
+.home-contact-info span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.home-contact-info i {
+  color: #f58545;
+}
+
+/* Work experience company label inside What I Do */
+.ci-company {
+  font-size: 13px;
+  color: #aaa;
+  margin: 2px 0 10px;
+  font-style: italic;
+}
+
+/* Skills list in resume - tighter styling */
+.skills-info .skill h5 {
+  font-size: 14px;
+  color: #f58545;
+  margin: 12px 0 4px;
+}
+
+.skills-info .skill p {
+  font-size: 13px;
+  margin-bottom: 0;
+  color: #ccc;
+}
+
+/* Contact form improvements */
+#contact-form .form-group {
+  margin-bottom: 16px;
+}
+
+#contact-form .form-control {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 6px;
+  padding: 10px 14px;
+  color: #eee;
+  width: 100%;
+  font-family: "Poppins", Helvetica, sans-serif;
+  font-size: 14px;
+}
+
+#contact-form .form-control:focus {
+  outline: none;
+  border-color: #f58545;
+  background: rgba(255,255,255,0.09);
+}
+
+#contact-form textarea.form-control {
+  resize: vertical;
+}
+
+/* Timeline company name */
+.timeline .item-company {
+  font-size: 12px;
+  color: #f58545;
+  display: block;
+  margin-top: 4px;
+}
+
+/* Info block cleanup */
+.info-block h4 {
+  font-size: 14px;
+  margin: 6px 0 0;
+}

@@ -4,18 +4,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Son Tung's Resume</title>
+  <title>Tung Ha Son - Backend Developer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <meta property="og:title" itemprop="name" content="Son Tung's Resume" />
-  <meta property="og:type" content="https://sontung0511.github.io/" />
-  <meta property="og:url" content="sontung0511.github.io" />
+  <meta property="og:title" itemprop="name" content="Tung Ha Son - Backend Developer" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://sontung0511.github.io/" />
   <meta property="og:image" itemprop="image" content="https://sontung0511.github.io/img/main_sontung.jpg" />
-  <meta property="og:description" itemprop="description" content="Junior Front End Developer" />
-  <meta property="og:site_name" content="Son Tung" />
+  <meta property="og:description" itemprop="description" content="Backend Developer specializing in React, Node.js, GoLang, and Kubernetes" />
+  <meta property="og:site_name" content="Tung Ha Son" />
 
-  <meta name="description" content="Junior Front End Developer" />
-  <meta name="keywords" content="Son Tung" />
-  <meta name="author" content="Son Tung" />
+  <meta name="description" content="Backend Developer specializing in React, Node.js, GoLang, and Kubernetes" />
+  <meta name="keywords" content="Tung Ha Son, Backend Developer, Nodejs, Go, React, Kubernetes" />
+  <meta name="author" content="Tung Ha Son" />
 
   <meta name="google-site-verification" content="r3XaZMekF_LV7HF5r_kqPdSG4CSzzBgU25Wwvbomfmg" />
 
@@ -31,6 +31,7 @@
   <link rel="stylesheet" href="css/owl.carousel.css" type="text/css" />
   <link rel="stylesheet" href="css/magnific-popup.css" type="text/css" />
   <link rel="stylesheet" href="css/main.css" type="text/css" />
+  <link rel="stylesheet" href="css/theme-emerald.css" type="text/css" />
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-SDKZNH6707"></script>
@@ -63,12 +64,11 @@
       <header id="site_header" class="header mobile-menu-hide">
         <div class="header-content">
           <div class="header-photo">
-            <img src="img/main_sontung.jpg" alt="Alex Smith" />
+            <img id="cv-avatar-img" src="img/main_sontung.jpg" alt="Tung Ha Son" />
           </div>
           <div class="header-titles">
-            <h2>Son Tung</h2>
-            <h4>Full-Stack Software Developer</h4>
-            <!-- <h4>thenewbadger.crypto</h4> -->
+            <h2 id="cv-sidebar-name">Tung Ha Son</h2>
+            <h4 id="cv-sidebar-title">Backend Developer</h4>
           </div>
         </div>
 
@@ -109,25 +109,21 @@
         <div class="social-links">
           <ul>
             <li>
-              <a href="https://www.linkedin.com/in/son-tung-78811626b/" target="_blank"><i
-                  class="fab fa-linkedin-in"></i></a>
+              <a id="cv-linkedin-link" href="https://www.linkedin.com/in/tunghason" target="_blank"><i class="fab fa-linkedin-in"></i></a>
             </li>
             <li>
-              <a href="https://github.com/sontung0511" target="_blank"><i class="fab fa-github-square"></i></a>
-            </li>
-            <li>
-              <a href="https://www.facebook.com/sontung0511/" target="_blank"><i class="fab fa-facebook"></i></a>
+              <a id="cv-github-link" href="https://github.com/sontung0511" target="_blank"><i class="fab fa-github-square"></i></a>
             </li>
           </ul>
         </div>
 
         <div class="header-buttons">
-          <a href="cv/CV Template IT.pdf" target="_blank" class="btn btn-primary a">Download CV</a>
+          <a id="cv-cv-download" href="cv/CV Template IT.pdf" target="_blank" class="btn btn-primary">Download CV</a>
         </div>
 
         <div class="copyrights">
-          © 2022 by
-          <a href="#about" class="text-primary">Son Tung</a>
+          © 2026 by
+          <a href="#home" class="text-primary">Tung Ha Son</a>
         </div>
       </header>
 
@@ -158,26 +154,21 @@
               <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-12">
                   <div class="title-block">
-                    <h2>Son Tung</h2>
+                    <h2 id="cv-home-name">Tung Ha Son</h2>
                     <div class="owl-carousel text-rotation">
                       <div class="item">
-                        <div class="sp-subtitle">
-                          Full-Stack Software Developer
-                        </div>
-                        <br />
+                        <div id="cv-home-sub1" class="sp-subtitle">Backend Developer</div>
                       </div>
-
                       <div class="item">
-                        <div class="sp-subtitle">
-                          Specializing in ReactJs , NextJS , TypeScript
-                          development,Nodejs, Go, Gitlab, K8s, Redis, Nginx, Argo, grafana, Docker, ClickHouse, Mongodb,
-                          Postgresql, Postman.
-                        </div>
-                        <br />
-                        <div class="sp-subtitle">
-                          My personal philosophy is "Do it with passion"
-                        </div>
+                        <div id="cv-home-sub2" class="sp-subtitle">Go · Node.js · React · Kubernetes</div>
                       </div>
+                      <div class="item">
+                        <div class="sp-subtitle">"Do it with passion"</div>
+                      </div>
+                    </div>
+                    <div class="home-contact-info">
+                      <span id="cv-home-phone"><i class="lnr lnr-phone"></i> +(84) 911420295</span>
+                      <span id="cv-home-email"><i class="lnr lnr-envelope"></i> hasontung.work@gmail.com</span>
                     </div>
                   </div>
                 </div>
@@ -196,11 +187,12 @@
               <!-- Personal Information -->
               <div class="row">
                 <div class="col-xs-12 col-sm-7">
-                  <p>
-                    As a Full-Stack Developer with over 1 year of experience, I am proficient in React, Node.js, Go, and
-                    Kubernetes (K8s). I possess skills in building scalable web applications and solving complex
-                    technical challenges swiftly. Driven by innovation and a passion for advanced web technologies, I am
-                    seeking an environment where I can apply and expand my skills in creating modern solutions.
+                  <p id="cv-summary">
+                    I'm a Backend Developer with experience specializing in React, Node.js, GoLang, and Kubernetes.
+                    I have a strong background in building scalable web applications and efficiently solving complex
+                    technical challenges. Passionate about innovation and advanced web technologies, I'm seeking an
+                    opportunity to apply my expertise and further enhance my skills in developing modern,
+                    high-performance solutions.
                   </p>
                 </div>
 
@@ -208,13 +200,20 @@
                   <div class="info-list">
                     <ul>
                       <li>
-                        <span class="title">Residence</span>
-                        <span class="value">HCM City, Viet Nam</span>
+                        <span class="title">Phone</span>
+                        <span id="cv-about-phone" class="value">+(84) 911420295</span>
                       </li>
-
+                      <li>
+                        <span class="title">Email</span>
+                        <span id="cv-about-email" class="value">hasontung.work@gmail.com</span>
+                      </li>
+                      <li>
+                        <span class="title">Residence</span>
+                        <span id="cv-about-location" class="value">HCM City, Viet Nam</span>
+                      </li>
                       <li>
                         <span class="title">Hobbies</span>
-                        <span class="value">Play football & basketball</span>
+                        <span id="cv-about-hobbies" class="value">Football &amp; Basketball</span>
                       </li>
                     </ul>
                   </div>
@@ -234,19 +233,7 @@
               </div>
 
               <div class="row">
-                <div class="col-xs-12 col-sm-6">
-                  <div class="col-inner">
-                    <div class="info-list-w-icon">
-                      <div class="info-block-w-icon">
-                        <div class="ci-text">
-                          <h4>Jan 2024 - current</h4>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
+                <!-- Backend -->
                 <div class="col-xs-12 col-sm-6">
                   <div class="col-inner">
                     <div class="info-list-w-icon">
@@ -255,54 +242,27 @@
                           <i class="lnr lnr-rocket"></i>
                         </div>
                         <div class="ci-text">
-                          <h4>Back-end</h4>
+                          <h4>Backend Development</h4>
+                          <p class="ci-company"><strong>Phenikaa MaaS (GoLabs)</strong> &mdash; Jan 2024 &ndash; now</p>
                           <ul>
-                            <li>Implemented end-to-end CI/CD pipelines with Gitlab and Kubernetes, automating
-                              deployments from code commit to production with a custom log manager API.</li>
-                            <li>Used Grafana and Argo to monitor logs, track system performance, and test APIs
-                              for quick
-                              issue resolution in production.</li>
-                            <li>Developed a bus application with over 180,000 users accessing 100+ routes.
-                              Implemented
-                              data collection and reporting features using Node.js to gather user statistics,
-                              route
-                              usage, and performance metrics to optimize system performance and improve user
-                              experience.
-                            </li>
-                            <li>Developed and designed APIs for reporting and visualizing data in real-time with
-                              Redis
-                              and RabbitMQ.</li>
-                            <li>Implemented comprehensive internationalization i18n support for English and
-                              Vietnamese
-                              languages, enhancing the application's global reach and user accessibility .</li>
-                            <li>Implemented secure authentication using JWT for login, registration, token
-                              verification,
-                              and refresh mechanisms. Ensured secure data transmission by encrypting and
-                              decrypting
-                              sensitive data using AES in multiple modes (AES-GCM for authentication, AES with
-                              PKCS7
-                              padding), maintaining confidentiality and integrity during transmission and
-                              storage.</li>
-                            <li>Optimized database performance with indexes, partitioning, and indexing
-                              strategies to
-                              handle over 2 million records. Prevented SQL injection through prepared
-                              statements,
-                              parameterized queries, and input validation.</li>
-                            <li>Designed and integrated microservices architecture, enabling efficient
-                              management and
-                              scaling of multiple services, including both RESTful APIs and GraphQL, enhancing
-                              overall
-                              system modularity and maintainability</li>
+                            <li>Implemented end-to-end CI/CD pipelines with <strong>Gitlab</strong> and Kubernetes, automating deployments from code commit to production with a custom log manager API.</li>
+                            <li>Used <strong>Grafana</strong> and <strong>Argo</strong> to monitor logs, track system performance, and test APIs for quick issue resolution in production.</li>
+                            <li>Developed a bus application with over <strong>180,000 users</strong> accessing <strong>100+</strong> routes. Implemented data collection and reporting features using Node.js.</li>
+                            <li>Developed and designed APIs for reporting and visualizing data in real-time with <strong>Redis</strong> and <strong>RabbitMQ</strong>.</li>
+                            <li>Implemented secure authentication using <strong>JWT</strong> and data encryption with <strong>AES</strong> (AES-GCM, AES/PKCS7).</li>
+                            <li>Optimized database performance with indexes and partitioning to handle over <strong>2 million records</strong>. Prevented SQL injection through prepared statements.</li>
+                            <li>Designed and integrated <strong>microservices architecture</strong> with RESTful APIs and GraphQL, enhancing system modularity.</li>
+                            <li>Optimised data with handler <strong>10,000,000</strong> records using query cursor pagination and chunkSize batch.</li>
                           </ul>
-                          <h5>Technologies :</h5>
-                          <p>Nodejs, Go, Gitlab, K8s, Redis, Nginx, Argo, grafana, Docker, ClickHouse, Mongodb,
-                            Postgresql, Postman</p>
+                          <h5>Technologies:</h5>
+                          <p>Nodejs, Go, Gitlab, K8s, Redis, Nginx, Argo, Grafana, Docker, ClickHouse, MongoDB, PostgreSQL, Postman</p>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
 
+                <!-- Frontend -->
                 <div class="col-xs-12 col-sm-6">
                   <div class="col-inner">
                     <div class="info-list-w-icon">
@@ -311,90 +271,18 @@
                           <i class="lnr lnr-pencil"></i>
                         </div>
                         <div class="ci-text">
-                          <h4>Do at Phenikaa MaaS</h4>
-                          <p>
-                            Phenikaa MaaS Coroperate - Developed and implemented a payment system for buses and
-                            metro
-                            subways, enabling contactless transactions using Visa, MasterCard, NAPAS, and mobile
-                            wallets, enhancing passenger convenience. I have been involved in key projects such
-                            as: :
-                            Rain and Flood Map of Da Nang, App Busmap , Vinbus
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xs-12 col-sm-6">
-                  <div class="col-inner">
-                    <div class="info-list-w-icon">
-                      <div class="info-block-w-icon">
-                        <div class="ci-text">
-                          <h4>Jan 2024 - current</h4>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xs-12 col-sm-6">
-                  <div class="col-inner">
-                    <div class="info-list-w-icon">
-                      <div class="info-block-w-icon">
-                        <div class="ci-icon">
-                          <i class="lnr lnr-rocket"></i>
-                        </div>
-                        <div class="ci-text">
-                          <h4>Front-end</h4>
+                          <h4>Frontend Development</h4>
+                          <p class="ci-company"><strong>VieON &mdash; DatVietVAC Group Holdings</strong> &mdash; Jan 2023 &ndash; Oct 2023</p>
                           <ul>
-                            <li>Created responsive user interfaces using Tailwind CSS, Bootstrap, Framer Motion,
-                              and
-                              Material UI, focusing on optimized layouts and enhanced user experience.</li>
-                            <li>Developed and maintained scalable web applications using ReactJs</li>
-                            <li>Integrated chatbox API with WebSocket/RESTful for real-time communication. Used
-                              lazy
-                              loading, message buffering, and async rendering to prevent lag, and optimized
-                              backend with
-                              caching for fast responses</li>
-                            <li>Integrated RESTful APIs to fetch and display data from the backend, improving
-                              user
-                              experience.</li>
-                            <li>Implemented unit testing and end-to-end testing for application stability using
-                              React
-                              Testing Library</li>
-                            <li>Managed application state using Redux and Context API.</li>
+                            <li>Created responsive user interfaces using <strong>Tailwind CSS</strong>, <strong>Bootstrap</strong>, <strong>Framer Motion</strong>, and <strong>Material UI</strong>.</li>
+                            <li>Developed and maintained scalable web applications using <strong>ReactJs</strong> and <strong>NodeJs</strong>.</li>
+                            <li>Integrated chatbox API with <strong>WebSocket/RESTful</strong> for real-time communication. Used lazy loading, message buffering, and async rendering to prevent lag.</li>
+                            <li>Integrated <strong>RESTful APIs</strong> to fetch and display data from the backend.</li>
+                            <li>Implemented unit testing and end-to-end testing using <strong>React Testing Library</strong>.</li>
+                            <li>Managed application state using <strong>Redux</strong> and <strong>Context API</strong>.</li>
                           </ul>
-                          <h5>Technologies :</h5>
-                          <p>React, Redux, React Testing Library, Gitlab, Docker, Postman, Tailwind CSS,
-                            Bootstrap,
-                            Framer Motion, Material UI</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-xs-12 col-sm-6">
-                  <div class="col-inner">
-                    <div class="info-list-w-icon">
-                      <div class="info-block-w-icon">
-                        <div class="ci-icon">
-                          <i class="lnr lnr-pencil"></i>
-                        </div>
-                        <div class="ci-text">
-                          <h4>Do at Vieon</h4>
-                          <p>
-                            VieON is Vietnam’s most advanced Over-The-Top (OTT) platform provided by DatVietVAC
-                            Group
-                            Holdings. Aside from providing access to more than 100 traditional TV channels,
-                            VieON boasts
-                            over 100,000 hours of copyrighted content, including movies, dramas, game shows and
-                            variety
-                            shows both local and abroad. I have been involved in key projects such as: : Vieon
-                          </p>
+                          <h5>Technologies:</h5>
+                          <p>React, Redux, React Testing Library, Gitlab, Docker, Postman, Tailwind CSS, Bootstrap, Framer Motion, Material UI</p>
                         </div>
                       </div>
                     </div>
@@ -408,7 +296,7 @@
               <div class="row">
                 <div class="col-xs-12 col-sm-12">
                   <div class="block-title">
-                    <h3>Testimonials and teacher</h3>
+                    <h3>Testimonials</h3>
                   </div>
                 </div>
               </div>
@@ -418,20 +306,17 @@
                   <div class="testimonials owl-carousel">
                     <div class="testimonial">
                       <div class="img">
-                        <img src="img/testimonials/toanvo.png" alt="Thomas" />
+                        <img src="img/testimonials/toanvo.png" alt="Khanh Toan" />
                       </div>
                       <div class="text">
                         <p>
-                          Tung has a creative vision, consistently generates new ideas, excels in time
-                          management, works
-                          diligently, and maintains an enthusiastic, cheerful, and collaborative demeanor with
-                          everyone
+                          Tung has a creative vision, consistently generates new ideas, excels in time management,
+                          works diligently, and maintains an enthusiastic, cheerful, and collaborative demeanor with everyone.
                         </p>
                       </div>
-
                       <div class="author-info">
                         <h4 class="author">Khanh Toan</h4>
-                        <h5 class="company">front end manager at Vieon</h5>
+                        <h5 class="company">Frontend Manager at VieON</h5>
                         <div class="icon">
                           <i class="fas fa-quote-right"></i>
                         </div>
@@ -443,45 +328,6 @@
 
               <div class="white-space-50"></div>
 
-              <!-- Fun Facts
-                  <div class="row">
-                    <div class="col-xs-12 col-sm-12">
-
-                      <div class="block-title">
-                        <h3>Fun <span>Facts</span></h3>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-xs-12 col-sm-4">
-                      <div class="fun-fact gray-default">
-                        <i class="lnr lnr-heart"></i>
-                        <h4>Happy Clients</h4>
-                        <span class="fun-fact-block-value">578</span>
-                        <span class="fun-fact-block-text"></span>
-                      </div>
-                    </div>
-
-                    <div class="col-xs-12 col-sm-4">
-                      <div class="fun-fact gray-default">
-                        <i class="lnr lnr-clock"></i>
-                        <h4>Working Hours</h4>
-                        <span class="fun-fact-block-value">2,000</span>
-                        <span class="fun-fact-block-text"></span>
-                      </div>
-                    </div>
-
-                    <div class="col-xs-12 col-sm-4 ">
-                      <div class="fun-fact gray-default">
-                        <i class="lnr lnr-star"></i>
-                        <h4>Awards Won</h4>
-                        <span class="fun-fact-block-value">15</span>
-                        <span class="fun-fact-block-text"></span>
-                      </div>
-                    </div>
-                  </div>
-                  End of Fun Facts -->
             </div>
           </section>
           <!-- End of About Me Subpage -->
@@ -502,56 +348,48 @@
                   <div class="timeline timeline-second-style clearfix">
                     <div class="timeline-item clearfix">
                       <div class="left-part">
-                        <h5 class="item-period">Jan 2024 - current</h5>
-                        <span class="item-company">Phenikaa MaaS</span>
+                        <h5 id="cv-exp1-period" class="item-period">Jan 2024 - now</h5>
+                        <span id="cv-exp1-company" class="item-company">Phenikaa MaaS (GoLabs)</span>
                       </div>
                       <div class="divider"></div>
                       <div class="right-part">
-                        <h4 class="item-title">
-                          Backend Developer
-                        </h4>
-                        <p>
-                          As a backend developer. I have experience in web app backend developer. Skilled in implement
-                          an backend system with Nodejs, golang, Security, Network, Microservices and gps
+                        <h4 id="cv-exp1-title" class="item-title">Backend Developer</h4>
+                        <p id="cv-exp1-desc">
+                          Developed and implemented a payment system for buses and metro subways, enabling
+                          contactless transactions using Visa, MasterCard, NAPAS, and mobile wallets.
+                          Key projects: Rain and Flood Map of Da Nang, App Busmap, VinBus.
                         </p>
                       </div>
                     </div>
+
                     <div class="timeline-item clearfix">
                       <div class="left-part">
-                        <h5 class="item-period">May 2023 - Oct 2023</h5>
-                        <span class="item-company">Vieon Cop of DatVietVAC</span>
+                        <h5 id="cv-exp2-period" class="item-period">Jan 2023 - Oct 2023</h5>
+                        <span id="cv-exp2-company" class="item-company">VieON &mdash; DatVietVAC Group Holdings</span>
                       </div>
                       <div class="divider"></div>
                       <div class="right-part">
-                        <h4 class="item-title">
-                          Junior Front End Software Engineer
-                        </h4>
-                        <p>
-                          As a seasoned front-end developer, I specialize in
-                          the design and development of web applications
-                          utilizing ReactJS and NextJs frameworks. My
-                          expertise encompasses the analysis, Tailwinds (both
-                          UI and functional), documentation, and maintenance
-                          of web applications. Additionally, I have been
-                          trained by senior developers from the company and
-                          can independently deploy web applications using
-                          CI/CD to various environments, including testing,
-                          development, and production.
+                        <h4 id="cv-exp2-title" class="item-title">Full-Stack Developer</h4>
+                        <p id="cv-exp2-desc">
+                          Designed and developed web applications using ReactJS and NextJS.
+                          Expertise in UI implementation, documentation, and maintenance.
+                          Deployed web applications using CI/CD to testing, development, and production environments.
+                          Key project: VieON OTT Platform.
                         </p>
                       </div>
                     </div>
+
                     <div class="timeline-item clearfix">
                       <div class="left-part">
-                        <h5 class="item-period">2022 - 2023</h5>
-                        <span class="item-company">freelancer</span>
+                        <h5 id="cv-exp3-period" class="item-period">2022 - 2023</h5>
+                        <span id="cv-exp3-company" class="item-company">Freelancer</span>
                       </div>
                       <div class="divider"></div>
                       <div class="right-part">
-                        <h4 class="item-title">BE and FE develop</h4>
-                        <p>
-                          I work on various projects from home, customizing
-                          them according to client requests and adding
-                          additional features.
+                        <h4 id="cv-exp3-title" class="item-title">Backend &amp; Frontend Developer</h4>
+                        <p id="cv-exp3-desc">
+                          Worked on various client projects — built and customized features
+                          for web applications according to client requirements.
                         </p>
                       </div>
                     </div>
@@ -566,119 +404,110 @@
                   <div class="timeline timeline-second-style clearfix">
                     <div class="timeline-item clearfix">
                       <div class="left-part">
-                        <h5 class="item-period">2019-2022</h5>
-                        <span class="item-company">Ton Duc Thang University</span>
+                        <h5 id="cv-edu-period" class="item-period">2019 - 2023</h5>
+                        <span id="cv-edu-school" class="item-company">Ton Duc Thang University (TDTU)</span>
                       </div>
                       <div class="divider"></div>
                       <div class="right-part">
-                        <h4 class="item-title">computer science</h4>
-                        <p>
-                          I am studying at the university in the computer
-                          science field, so I can understand and analyze data,
-                          including big data, and I have completed numerous
-                          projects related to web development, data analysis,
-                          and big data.
+                        <h4 id="cv-edu-title" class="item-title">Computer Science</h4>
+                        <p id="cv-edu-desc">
+                          Grade: Good &nbsp;&bull;&nbsp; English level: B1<br />
+                          Projects in web development, data analysis, and big data.
                         </p>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <!-- Skills & Certificates -->
+                <!-- Skills -->
                 <div class="col-xs-12 col-sm-5">
-                  <!-- Coding Skills -->
                   <div class="block-title">
-                    <h3>Coding <span>Skills</span></h3>
+                    <h3>Technical <span>Stacks</span></h3>
                   </div>
 
                   <div class="skills-info skills-second-style">
-                    <!-- Skill 5 -->
                     <div class="skill clearfix">
-                      <h3>
-                        NextJS, ReactJs, Hook, Redux, Thunk, Bootstrap,
-                        Material, Ant, Design, Tailwind, CSS, HTML, SASS,
-                        JavaScript, JQuery, TypeScript.
-                      </h3>
+                      <h5>Programming Languages</h5>
+                      <p id="cv-skill-languages">Go, JavaScript (TypeScript, JSX)</p>
                     </div>
-                    <!-- End of Skill 5 -->
+                    <div class="skill clearfix">
+                      <h5>Frameworks &amp; Libraries</h5>
+                      <p id="cv-skill-frameworks">go-redis/redis, gorm, Gin, Echo, NextJS, ReactJS, NodeJS, NestJS</p>
+                    </div>
+                    <div class="skill clearfix">
+                      <h5>Coding Principles</h5>
+                      <p id="cv-skill-principles">Clean architecture, Clean code, Design patterns</p>
+                    </div>
+                    <div class="skill clearfix">
+                      <h5>Databases</h5>
+                      <p id="cv-skill-databases">MySQL, PostgreSQL, MongoDB, ClickHouse, Redis</p>
+                    </div>
+                    <div class="skill clearfix">
+                      <h5>DevOps &amp; Tools</h5>
+                      <p id="cv-skill-devops">Kubernetes (K8s), Docker, Gitlab CI/CD, Nginx, Argo, Grafana, Postman, Git, Jira, Figma</p>
+                    </div>
                   </div>
-                  <!-- End of Coding Skills -->
 
                   <div class="white-space-10"></div>
 
-                  <!-- Design Skills -->
                   <div class="block-title">
-                    <h3>Business <span>Skills</span></h3>
+                    <h3>Soft <span>Skills</span></h3>
                   </div>
 
                   <div class="skills-info skills-second-style">
-                    <!-- Skill 1 -->
                     <div class="skill clearfix">
-                      <h3>
-                        Team Work, Communication, Critical Thinking,
-                        Knowledges
-                      </h3>
-
+                      <p id="cv-soft-skills">Team Work, Communication, Critical Thinking, Problem Solving</p>
                     </div>
-                    <div class="white-space-10"></div>
-
-                    <!-- Knowledges -->
-                    <div class="block-title">
-                      <h3>Knowledges</h3>
-                    </div>
-
-                    <ul class="knowledges">
-                      <li>Communication</li>
-                      <li>ReactJs</li>
-                      <li>Typescript</li>
-                      <li>Git</li>
-                      <li>Jira</li>
-                      <li>Figma</li>
-                      <li>NodeJS</li>
-                      <li>NestJS</li>
-                      <li>Golang</li>
-                      <li>MongoDB</li>
-                      <li>ClickHouse</li>
-                      <li>MongoDB</li>
-                      <li>MySQL</li>
-                      <li>NextJS</li>
-                    </ul>
-                    <!-- End of Knowledges -->
                   </div>
-                  <!-- End of Skills & Certificates -->
+
+                  <div class="white-space-10"></div>
+
+                  <div class="block-title">
+                    <h3>Knowledges</h3>
+                  </div>
+
+                  <ul id="cv-knowledges" class="knowledges">
+                    <li>ReactJs</li>
+                    <li>TypeScript</li>
+                    <li>NextJS</li>
+                    <li>NodeJS</li>
+                    <li>NestJS</li>
+                    <li>Golang</li>
+                    <li>PostgreSQL</li>
+                    <li>MongoDB</li>
+                    <li>ClickHouse</li>
+                    <li>Redis</li>
+                    <li>K8s</li>
+                    <li>Docker</li>
+                    <li>Git</li>
+                    <li>Jira</li>
+                    <li>Figma</li>
+                  </ul>
                 </div>
+              </div>
 
-                <div class="white-space-50"></div>
+              <div class="white-space-30"></div>
 
-                <!-- Certificates -->
-
-
-                <!-- End of Certificate 1 -->
-
-                <!-- Certificate 2 -->
+              <!-- Certificate -->
+              <div class="row">
                 <div class="col-xs-12 col-sm-6">
                   <div class="certificate-item clearfix">
                     <div class="certi-logo">
-                      <img src="img/clients/tdt.png" alt="logo" />
+                      <img src="img/clients/tdt.png" alt="TDTU logo" />
                     </div>
-
                     <div class="certi-content">
                       <div class="certi-title">
-                        <h4>computer science</h4>
-                      </div>
-                      <div class="certi-id">
-                        <span></span>
+                        <h4>Computer Science</h4>
                       </div>
                       <div class="certi-date">
                         <span>Dec 2023</span>
                       </div>
                       <div class="certi-company">
-                        <span></span>
+                        <span>Ton Duc Thang University</span>
                       </div>
                     </div>
                   </div>
                 </div>
-                <!-- End of Certificate 2 -->
               </div>
               <!-- End of Certificates -->
             </div>
@@ -712,7 +541,7 @@
                     </ul>
 
                     <!-- Portfolio Grid -->
-                    <div class="portfolio-grid three-columns">
+                    <div id="cv-portfolio-grid" class="portfolio-grid three-columns">
                       <figure class="item standard" data-groups='["category_all", "category_reactjs"]'>
                         <div class="portfolio-item-img">
                           <img src="img/portfolio/rapviet3.png" alt="voting rapviet3" title="" />
@@ -798,51 +627,63 @@
                 <!-- Contact Info -->
                 <div class="col-xs-12 col-sm-4">
                   <div class="info-block gray-default">
-                    <i class="lnr lnr-map-marker"></i>
-                    <h4>Topaz elite, Quan 8, HCM City, VN</h4>
-                    <span class="info-block-value"></span>
-                    <span class="info-block-text"></span>
+                    <i class="lnr lnr-phone"></i>
+                    <h4 id="cv-contact-phone">+(84) 911420295</h4>
                   </div>
 
                   <div class="info-block gray-default">
                     <i class="lnr lnr-envelope"></i>
-                    <h4>tunghason9a6@gmail.com</h4>
-                    <span class="info-block-value"></span>
-                    <span class="info-block-text"></span>
+                    <h4 id="cv-contact-email">hasontung.work@gmail.com</h4>
+                  </div>
+
+                  <div class="info-block gray-default">
+                    <i class="lnr lnr-map-marker"></i>
+                    <h4 id="cv-contact-location">HCM City, Viet Nam</h4>
                   </div>
 
                   <div class="info-block gray-default">
                     <i class="lnr lnr-checkmark-circle"></i>
                     <h4>Freelance Available</h4>
-                    <span class="info-block-value"></span>
-                    <span class="info-block-text"></span>
                   </div>
                 </div>
                 <!-- End of Contact Info -->
 
                 <!-- Contact Form -->
                 <div class="col-xs-12 col-sm-8">
-                  <div class="map">
-
-                  </div>
-                  <div class="block-title">
-
-                  </div>
-
                   <form id="contact-form" class="contact-form" action="https://formspree.io/f/mbjedpgy" method="POST">
                     <div class="messages"></div>
+                    <div class="row">
+                      <div class="col-xs-12 col-sm-6">
+                        <div class="form-group">
+                          <input type="text" name="name" class="form-control" placeholder="Your Name" required />
+                        </div>
+                      </div>
+                      <div class="col-xs-12 col-sm-6">
+                        <div class="form-group">
+                          <input type="email" name="email" class="form-control" placeholder="Your Email" required />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <input type="text" name="subject" class="form-control" placeholder="Subject" />
+                    </div>
+                    <div class="form-group">
+                      <textarea name="message" class="form-control" rows="5" placeholder="Your Message" required></textarea>
+                    </div>
+                    <div class="form-group">
+                      <button type="submit" class="btn btn-primary">Send Message</button>
+                    </div>
                     <div id="contact-form-status"></div>
+                  </form>
                 </div>
-                </form>
+                <!-- End of Contact Form -->
               </div>
-              <!-- End of Contact Form -->
             </div>
+          </section>
+          <!-- End of Contact Subpage -->
         </div>
-        </section>
-        <!-- End of Contact Subpage -->
       </div>
     </div>
-  </div>
   </div>
 
   <script src="js/jquery.min.js"></script>
@@ -857,7 +698,7 @@
 
   <script src="js/validator.js"></script>
   <script src="js/main.js"></script>
-  <!-- <script src="js/sender.js"></script> -->
+  <script src="js/cv-patch.js"></script>
 </body>
 
 </html>

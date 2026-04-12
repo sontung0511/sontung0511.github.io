@@ -1,0 +1,435 @@
+/* ================================================================
+   Theme: Minimal Dark + Emerald Green
+   Accent:  #10b981  (emerald-500)
+   BG:      #111827  (gray-900)
+   Card:    #1f2937  (gray-800)
+   Surface: #1a2535  (content area)
+   Border:  #374151  (gray-700)
+   Text:    #9ca3af  (gray-400)
+   Heading: #f9fafb  (gray-50)
+================================================================ */
+
+/* ── 1. Google font upgrade to Inter ───────────────────────── */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+/* ── 2. Root variables ───────────────────────────────────────── */
+:root {
+  --accent:       #10b981;
+  --accent-light: #34d399;
+  --accent-dim:   rgba(16, 185, 129, 0.15);
+  --bg:           #111827;
+  --card:         #1f2937;
+  --surface:      #1a2535;
+  --border:       #374151;
+  --text:         #9ca3af;
+  --text-light:   #d1d5db;
+  --heading:      #f9fafb;
+}
+
+/* ── 3. Body & background ────────────────────────────────────── */
+body {
+  background: var(--bg) !important;
+  color: var(--text) !important;
+  font-family: "Inter", "Poppins", Helvetica, sans-serif !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--heading) !important;
+  font-family: "Inter", "Poppins", Helvetica, sans-serif !important;
+}
+
+a { color: var(--accent) !important; }
+a:hover { color: var(--accent-light) !important; }
+
+/* ── 4. Page wrapper card ────────────────────────────────────── */
+.page-content {
+  background-color: var(--card) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.5) !important;
+  border-radius: 20px !important;
+}
+
+/* ── 5. Left sidebar (header) ────────────────────────────────── */
+.header {
+  background: linear-gradient(180deg, #1a2535 0%, #111827 100%) !important;
+  border-right: 1px solid var(--border) !important;
+  border-radius: 20px 0 0 20px !important;
+}
+
+.header-photo img {
+  border: 3px solid var(--accent) !important;
+  box-shadow: 0 0 0 6px var(--accent-dim), 0 8px 24px rgba(0,0,0,0.4) !important;
+}
+
+.header-titles h2 {
+  color: var(--heading) !important;
+  font-weight: 700 !important;
+}
+
+.header-titles h4 {
+  color: var(--accent) !important;
+  font-weight: 400 !important;
+  font-size: 14px !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+}
+
+/* Copyrights */
+.header .copyrights {
+  color: #4b5563 !important;
+}
+
+/* Download CV button */
+.header-buttons {
+  margin-top: 30px !important;
+}
+
+.header-buttons .btn-primary {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: #fff !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.03em !important;
+  padding: 0.6em 1.8em !important;
+}
+
+.header-buttons .btn-primary:hover {
+  background: var(--accent-light) !important;
+  border-color: var(--accent-light) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 20px rgba(16,185,129,0.35) !important;
+}
+
+/* Social links */
+.social-links ul li a {
+  color: var(--text) !important;
+  background: var(--border) !important;
+  border-radius: 8px !important;
+  width: 36px !important;
+  height: 36px !important;
+  line-height: 36px !important;
+}
+
+.social-links ul li a:hover {
+  color: #fff !important;
+  background: var(--accent) !important;
+  opacity: 1 !important;
+}
+
+/* ── 6. Navigation pill ──────────────────────────────────────── */
+@media only screen and (min-width: 1025px) {
+  ul.main-menu {
+    background-color: var(--card) !important;
+    border: 1px solid var(--border) !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3) !important;
+  }
+
+  ul.main-menu a {
+    color: #6b7280 !important;
+  }
+
+  ul.main-menu a.active,
+  ul.main-menu a:focus,
+  ul.main-menu a:hover {
+    color: var(--accent) !important;
+  }
+
+  ul.main-menu .link-text {
+    background-color: var(--accent) !important;
+    border-radius: 6px !important;
+  }
+}
+
+.arrows-nav {
+  background-color: var(--card) !important;
+  border: 1px solid var(--border) !important;
+}
+
+.arrows-nav div:hover { color: var(--accent) !important; }
+
+/* ── 7. Content / Section area ───────────────────────────────── */
+.section-content {
+  background-color: var(--surface) !important;
+  padding: 50px 60px !important;
+}
+
+.single-page-content {
+  background-color: var(--surface) !important;
+}
+
+/* Scrollbar */
+.ps:hover > .ps__scrollbar-y-rail:hover > .ps__scrollbar-y,
+.ps:hover.ps--in-scrolling.ps--y > .ps__scrollbar-y-rail > .ps__scrollbar-y {
+  background-color: var(--accent) !important;
+}
+
+/* ── 8. Page/block titles ────────────────────────────────────── */
+.page-title h2 { color: var(--heading) !important; }
+.page-title h2 span { color: var(--accent) !important; }
+
+.page-title:after,
+.block-title:after {
+  background-image: radial-gradient(circle, var(--accent) 1px, transparent 1px) !important;
+  background-size: 6px 6px !important;
+}
+
+.block-title h3 span { color: var(--accent) !important; }
+
+/* ── 9. Buttons (global) ─────────────────────────────────────── */
+.btn-primary,
+button[type="submit"] {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: #fff !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  transition: all 0.25s ease !important;
+}
+
+.btn-primary:hover,
+button[type="submit"]:hover {
+  background: var(--accent-light) !important;
+  border-color: var(--accent-light) !important;
+  box-shadow: 0 6px 18px rgba(16,185,129,0.35) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* ── 10. Preloader ───────────────────────────────────────────── */
+.preloader { background: var(--bg) !important; }
+.preloader-spinner { background-color: var(--accent) !important; }
+
+/* ── 11. Home section ────────────────────────────────────────── */
+.start-page .section-content,
+.home-bg {
+  background-color: transparent !important;
+}
+
+.home-bg {
+  background-image: none !important;
+  background: linear-gradient(135deg, #0f1b2d 0%, #0d1f16 100%) !important;
+  box-shadow: none !important;
+  border-right: 1px solid var(--border) !important;
+}
+
+.title-block h2 {
+  color: var(--heading) !important;
+  font-size: 52px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+}
+
+.sp-subtitle {
+  color: var(--accent) !important;
+  font-size: 17px !important;
+  font-weight: 500 !important;
+}
+
+.home-contact-info {
+  color: var(--text) !important;
+}
+
+.home-contact-info i { color: var(--accent) !important; }
+
+/* ── 12. About / Info List ───────────────────────────────────── */
+.info-list .title { color: var(--accent) !important; }
+.info-list .value { color: var(--text-light) !important; }
+
+/* info-block (Contact cards) */
+.info-block {
+  background-color: var(--card) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 12px !important;
+  transition: border-color 0.2s, transform 0.2s !important;
+}
+
+.info-block:hover {
+  border-color: var(--accent) !important;
+  transform: translateY(-2px) !important;
+}
+
+.info-block i { color: var(--accent) !important; }
+.info-block h4 { color: var(--text-light) !important; font-size: 14px !important; }
+
+/* ci-icon (What I Do section) */
+.info-block-w-icon i { color: var(--accent) !important; opacity: 1 !important; }
+.ci-company { color: var(--accent) !important; }
+
+/* ── 13. Timeline ────────────────────────────────────────────── */
+.timeline-second-style .divider {
+  background-color: var(--border) !important;
+}
+
+.timeline-second-style .divider:before {
+  background-color: var(--accent) !important;
+  opacity: 0.3 !important;
+}
+
+.timeline-second-style .divider:after {
+  background-color: var(--surface) !important;
+  border-color: var(--accent) !important;
+}
+
+.timeline-second-style .item-period { color: #6b7280 !important; }
+
+.timeline-second-style .item-company {
+  color: var(--accent) !important;
+  font-weight: 500 !important;
+}
+
+.timeline-second-style .item-title { color: var(--heading) !important; }
+
+.timeline-second-style .right-part p,
+.timeline-second-style .right-part li {
+  color: var(--text) !important;
+  font-size: 0.875rem !important;
+  line-height: 1.7 !important;
+}
+
+/* ── 14. Skills ──────────────────────────────────────────────── */
+.skills-info .skill h5 { color: var(--accent) !important; }
+.skills-info .skill p { color: var(--text-light) !important; }
+
+.skills-second-style .skill-container {
+  background-color: var(--border) !important;
+  border-color: var(--accent) !important;
+}
+
+.skills-second-style .skill-percentage {
+  background-color: var(--accent) !important;
+  border-color: var(--surface) !important;
+}
+
+/* Knowledges tags */
+.knowledges li {
+  background-color: var(--accent-dim) !important;
+  color: var(--accent-light) !important;
+  border: 1px solid rgba(16,185,129,0.3) !important;
+  border-radius: 6px !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  padding: 3px 12px !important;
+}
+
+/* ── 15. Testimonials ────────────────────────────────────────── */
+.testimonial {
+  border-color: var(--border) !important;
+  border-radius: 16px !important;
+  background: var(--card) !important;
+}
+
+.testimonial .author-info .icon { color: var(--accent) !important; }
+.testimonial .author-info .company { color: var(--text) !important; }
+
+/* ── 16. Portfolio ───────────────────────────────────────────── */
+.portfolio-filters li a { color: var(--text) !important; }
+.portfolio-filters li.active a { color: var(--accent) !important; }
+
+.portfolio-item-img::after {
+  background: linear-gradient(to top, rgba(16,185,129,0.85), transparent) !important;
+}
+
+/* ── 17. Certificate card ────────────────────────────────────── */
+.certificate-item {
+  border-color: var(--border) !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  background: var(--card) !important;
+}
+
+.certi-logo {
+  background-color: var(--border) !important;
+}
+
+/* ── 18. Contact form inputs ─────────────────────────────────── */
+#contact-form .form-control,
+.form-control {
+  background: var(--card) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 8px !important;
+  color: var(--text-light) !important;
+}
+
+#contact-form .form-control:focus,
+.form-control:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px var(--accent-dim) !important;
+  background: var(--card) !important;
+}
+
+.form-control ~ .form-control-border {
+  border-color: var(--accent) !important;
+}
+
+/* ── 19. Owl carousel nav buttons ────────────────────────────── */
+.testimonials.owl-carousel .owl-nav .owl-prev,
+.testimonials.owl-carousel .owl-nav .owl-next {
+  background-color: var(--border) !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
+  border-radius: 6px !important;
+}
+
+.testimonials.owl-carousel .owl-nav .owl-prev:hover,
+.testimonials.owl-carousel .owl-nav .owl-next:hover {
+  background-color: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: #fff !important;
+}
+
+/* ── 20. Animated bg — hide old orange, use noise ────────────── */
+.animated-bg {
+  opacity: 0.03 !important;
+  filter: grayscale(1) !important;
+}
+
+/* ── 21. Mobile nav ──────────────────────────────────────────── */
+@media only screen and (max-width: 1024px) {
+  .header {
+    background: var(--card) !important;
+    border-right: none !important;
+    border-radius: 20px 20px 0 0 !important;
+    border-bottom: 1px solid var(--border) !important;
+  }
+
+  .menu-toggle span {
+    background-color: var(--accent) !important;
+  }
+
+  ul.main-menu {
+    background-color: var(--card) !important;
+  }
+
+  ul.main-menu a { color: var(--text) !important; }
+  ul.main-menu a.active { color: var(--accent) !important; }
+}
+
+/* ── 22. li bullets in What I Do ─────────────────────────────── */
+.ci-text ul {
+  padding-left: 18px;
+}
+
+.ci-text ul li {
+  color: var(--text) !important;
+  font-size: 0.875rem !important;
+  line-height: 1.75 !important;
+  margin-bottom: 6px !important;
+}
+
+.ci-text ul li strong {
+  color: var(--text-light) !important;
+}
+
+.ci-text h5 {
+  color: var(--accent) !important;
+  font-size: 13px !important;
+  margin-top: 14px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+}
+
+/* ── 23. Selection highlight ─────────────────────────────────── */
+::selection {
+  background: var(--accent-dim);
+  color: var(--accent-light);
+}
