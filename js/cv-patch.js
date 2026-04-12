@@ -113,17 +113,19 @@
       if (proj.category) cats.push(proj.category);
       var dataGroups = JSON.stringify(cats);
 
-      // link type: external opens in new tab, internal uses ajax-page-load
+      // link type: external (or any http/https URL) opens in new tab
+      var isExternal = proj.linkType === 'external' ||
+        (proj.link && /^https?:\/\//i.test(proj.link));
       var linkHtml;
-      if (proj.linkType === 'external') {
-        linkHtml = '<a href="' + escHtml(proj.link) + '" target="_blank" title="' + escHtml(proj.name) + '"><\/a>';
+      if (isExternal && proj.link) {
+        linkHtml = '<a href="' + escHtml(proj.link) + '" target="_blank" rel="noopener noreferrer" title="' + escHtml(proj.name) + '"><\/a>';
       } else if (proj.link) {
         linkHtml = '<a href="' + escHtml(proj.link) + '" class="ajax-page-load" title="' + escHtml(proj.name) + '"><\/a>';
       } else {
         linkHtml = '';
       }
 
-      var iconHtml = proj.linkType === 'external'
+      var iconHtml = isExternal
         ? '<i class="fa fa-link"><\/i>'
         : '<i class="far fa-file-alt"><\/i>';
 

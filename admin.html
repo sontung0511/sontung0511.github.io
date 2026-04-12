@@ -1355,7 +1355,7 @@ function renderPortfolioList() {
           '<\/div>' +
           '<div class="field span2">' +
             '<label>Link / URL<\/label>' +
-            '<input type="text" value="' + escA(proj.link) + '" onchange="updateProject(\'' + proj.id + '\',\'link\',this.value)" placeholder="src/portfolio-x.html  or  https://..." \/>' +
+            '<input type="text" value="' + escA(proj.link) + '" onchange="updateProject(\'' + proj.id + '\',\'link\',this.value);if(/^https?:\\/\\//i.test(this.value)){updateProject(\'' + proj.id + '\',\'linkType\',\'external\');renderPortfolioList()}" placeholder="src/portfolio-x.html  or  https://..." \/>' +
           '<\/div>' +
           '<div class="field span2">' +
             '<label>Description (optional, for future detail page)<\/label>' +
